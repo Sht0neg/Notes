@@ -16,12 +16,17 @@
         <Label Content="Текст: " HorizontalAlignment="Left" FontSize="16" Grid.Column="0" Margin="15, 65, 10 ,10" VerticalAlignment="Top"/>
         <TextBox x:Name="TextBox" HorizontalAlignment="Left" Margin="22,95,0,0" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Top" Width="300" Height="150"/>
         <Label Content="Теги: " HorizontalAlignment="Left" FontSize="16" Grid.Column="0" Margin="15, 255, 10 ,10" VerticalAlignment="Top"/>
-        <ListBox x:Name="PossTagsList" Grid.Column="0" Height="100" Width="220" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="22, 10, 10, 45"/>
+        <ListBox x:Name="TagsList" Grid.Column="0" Height="100" Width="220" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="22, 10, 10, 45" SelectionChanged="TagsList_SelectionChanged"/>
         <Label Content="Доступные теги: " HorizontalAlignment="Right" FontSize="16" Grid.Column="0" Margin="10, 255, 120, 10" VerticalAlignment="Top"/>
-        <ListBox x:Name="TagsList" Grid.Column="0" Height="100" Width="220" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="22, 10, 30, 45"/>
-        <Button Content="Удалить" Grid.Column="0" HorizontalAlignment="Left" Margin="80,400,0,0" Width="100" Height="25" VerticalAlignment="Top"/>
+        <ListBox x:Name="PossTagsList" Grid.Column="0" Height="100" Width="220" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="22, 10, 30, 45" SelectionChanged="PossTagsList_SelectionChanged"/>
+        <Button Content="Исключить" Grid.Column="0" HorizontalAlignment="Left" Margin="80,400,0,0" Width="100" Height="25" VerticalAlignment="Top"/>
         <Button Content="Добавить" Grid.Column="0" HorizontalAlignment="Left" Margin="340,400,0,0" Width="100" Height="25" VerticalAlignment="Top"/>
-        <Button Content="Изменить" Grid.Column="1" HorizontalAlignment="Center" Margin="50, -30, 50, 50" Width="150" Height="45" VerticalAlignment="Center"/>
-        <Button Content="Выйти" Grid.Column="1" HorizontalAlignment="Center" Margin="50, 110, 50, 50"  Width="150" Height="45" VerticalAlignment="Center"/>
+        <Button Content="Создать тег" Grid.Column="1" HorizontalAlignment="Center" Margin="50, -70, 50, 50" Width="150" Height="45" VerticalAlignment="Center" Click="NewTagButton_Click"/>
+        <Button Content="Изменить тег" Grid.Column="1" HorizontalAlignment="Center" Margin="50, 110, 50, 50" Width="150" Height="45" VerticalAlignment="Center" Click="ReTagButton_Click"/>
+        <Button Content="Удалить тег" Grid.Column="1" HorizontalAlignment="Center" Margin="50, 280, 50, 50" Width="150" Height="45" VerticalAlignment="Center" Click="DelTagButton_Click"/>
+        <Button Content="Изменить" Grid.Column="0" HorizontalAlignment="Center" Margin="50, -160, -270, 50" Width="150" Height="45" VerticalAlignment="Center"/>
+        <Button Content="Выйти" Grid.Column="0" HorizontalAlignment="Center" Margin="50, 10, -270, 50"  Width="150" Height="45" VerticalAlignment="Center"/>
+        <Label Content="Название тега: " HorizontalAlignment="Left" FontSize="16" Grid.Column="1" Margin="15, 40, 10 ,10" VerticalAlignment="Top"/>
+        <TextBox x:Name="TagBox" HorizontalAlignment="Left" Margin="20,73,0,0" TextWrapping="Wrap" Grid.Column="1" VerticalAlignment="Top" Width="200"/>
     </Grid>
 </Window>

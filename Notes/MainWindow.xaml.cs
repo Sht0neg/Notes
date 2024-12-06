@@ -30,5 +30,11 @@ namespace Notes
                 NoteList.Items.Add(item);
             }
         }
+
+        private void InfButton_Click(object sender, RoutedEventArgs e)
+        {
+            Note add = new Note(this, (NoteList.SelectedItem as NotesCl).Id, "inf");
+            bool? result = add.ShowDialog();
+        }
     }
 }
