@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Notes
 {
@@ -13,7 +14,8 @@ namespace Notes
     {
         public string StrConn = "Server=127.0.0.1;Database=Note;Uid=root;Pwd=12345";
 
-        public DataTable Init() {
+        public DataTable Init()
+        {
             using (MySqlConnection conn = new MySqlConnection(StrConn))
             {
                 conn.Open();
@@ -26,7 +28,48 @@ namespace Notes
             }
         }
 
-        public void CreatNewTag(string Name) {
+        public void CreateNewNote(string Titel, string Text)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"INSERT INTO Notes(Titel, Content) VALUES ('{Titel}', '{Text}')";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateNote(int Id, string Titel, string Text)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"UPDATE Notes SET Titel = '{Titel}', Content = '{Text}' WHERE Id = {Id}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteNote(int Id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"DELETE FROM NoteTags WHERE NoteId = {Id}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"DELETE FROM Notes WHERE Id = {Id}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void CreatNewTag(string Name)
+        {
             using (MySqlConnection conn = new MySqlConnection(StrConn))
             {
                 conn.Open();
@@ -36,7 +79,8 @@ namespace Notes
             }
         }
 
-        public void ReTag(Tag tag) {
+        public void ReTag(Tag tag)
+        {
             using (MySqlConnection conn = new MySqlConnection(StrConn))
             {
                 conn.Open();
@@ -58,8 +102,9 @@ namespace Notes
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 var tempResult = from t in dataTable.AsEnumerable() select new Tag(t.Field<int>("Id"), t.Field<string>("Name"));
-                foreach (var t in tempResult) {
-                result.Add(t);
+                foreach (var t in tempResult)
+                {
+                    result.Add(t);
                 }
             }
             return result;
@@ -82,10 +127,52 @@ namespace Notes
             using (MySqlConnection conn = new MySqlConnection(StrConn))
             {
                 conn.Open();
-                string strCommand = $"DELETE FROM Tags SET WHERE Id = {tag.Id}";
+                string strCommand = $"DELETE FROM NoteTags WHERE TagId = {tag.Id}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"DELETE FROM Tags WHERE Id = {tag.Id}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+            
+        }
+
+        public void AddTagToNote(int TagId, int NoteId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"INSERT INTO NoteTags(NoteId, TagId) VALUES ('{NoteId}', '{TagId}')";
                 MySqlCommand cmd = new MySqlCommand(strCommand, conn);
                 cmd.ExecuteNonQuery();
             }
         }
-    }   
+
+        public void DelTagForNote(int TagId, int NoteId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"DELETE FROM NoteTags WHERE TagId = {TagId} AND NoteId = {NoteId}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpgateTagNote(int NoteId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"UPDATE NoteTags SET NoteId = '{NoteId}' WHERE NoteId = 0";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+    }
 }

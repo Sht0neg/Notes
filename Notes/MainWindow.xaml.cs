@@ -24,6 +24,7 @@ namespace Notes
         }
 
         public void Initialisation() {
+            NoteList.Items.Clear();
             DataTable dataTable = new Service().Init();
             var result = from n in dataTable.AsEnumerable() select new NotesCl(n.Field<int>("Id"), n.Field<string>("Titel"), n.Field<string>("Content"));
             foreach ( var item in result ) {
@@ -33,8 +34,25 @@ namespace Notes
 
         private void InfButton_Click(object sender, RoutedEventArgs e)
         {
-            Note add = new Note(this, (NoteList.SelectedItem as NotesCl).Id, "inf");
+            if (NoteList.SelectedItem != null)
+            {
+                Note add = new Note(this, (NoteList.SelectedItem as NotesCl).Id, "inf");
+                bool? result = add.ShowDialog();
+                Initialisation();
+            }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Note add = new Note(this, 0, "hf");
             bool? result = add.ShowDialog();
+            Initialisation();
+        }
+
+        private void DelButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Service().DeleteNote((NoteList.SelectedItem as NotesCl).Id);
+            Initialisation();
         }
     }
 }

@@ -14,7 +14,8 @@
         <ListBox Grid.Column="0" x:Name="NoteList" FontSize="17"></ListBox>
         <StackPanel VerticalAlignment="Center" Grid.Column="1" Width="200">
             <Button x:Name="InfButton" Content="Просмотреть" Height="50" Margin="0, 0, 0, 50" Click="InfButton_Click"></Button>
-            <Button x:Name="AddButton" Content="Добавить" Height="50"></Button>
+            <Button x:Name="AddButton" Content="Добавить" Height="50" Margin="0, 0, 0, 50" Click="AddButton_Click"></Button>
+            <Button x:Name="DelButton" Content="Удалить" Height="50" Click="DelButton_Click" ></Button>
         </StackPanel>
     </Grid>
 </Window>
