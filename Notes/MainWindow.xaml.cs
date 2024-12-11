@@ -30,6 +30,9 @@ namespace Notes
             foreach ( var item in result ) {
                 NoteList.Items.Add(item);
             }
+            DataTable dt = new Service().SettingsInit();
+            NoteList.FontSize = dt.Rows[0].Field<int>("FontSize");
+            NoteList.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
         }
 
         private void InfButton_Click(object sender, RoutedEventArgs e)
@@ -52,6 +55,13 @@ namespace Notes
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             new Service().DeleteNote((NoteList.SelectedItem as NotesCl).Id);
+            Initialisation();
+        }
+
+        private void SetButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetWindow w = new SetWindow();
+            bool? result = w.ShowDialog();
             Initialisation();
         }
     }

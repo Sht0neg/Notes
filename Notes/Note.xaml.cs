@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlX.XDevAPI.Common;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -119,6 +120,18 @@ namespace Notes
             {
                 TagsList.Items.Add(tag);
             }
+            DataTable dt = new Service().SettingsInit();
+            PossTagsList.FontSize = dt.Rows[0].Field<int>("FontSize");
+            PossTagsList.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
+            TagsList.FontSize = dt.Rows[0].Field<int>("FontSize");
+            TagsList.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
+            TagBox.FontSize = dt.Rows[0].Field<int>("FontSize");
+            TagBox.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
+            TitelBox.FontSize = dt.Rows[0].Field<int>("FontSize");
+            TitelBox.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
+            TextBox.FontSize = dt.Rows[0].Field<int>("FontSize");
+            TextBox.Foreground = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString(dt.Rows[0].Field<string>("TextColor"));
+
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
@@ -143,7 +156,16 @@ namespace Notes
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            serv.DeleteNote(index);
+            //serv.DeleteNote(index);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            var dt = new Service().Init();
+            var result = from n in dt.AsEnumerable() select new NotesCl(n.Field<int>("Id"), n.Field<string>("Titel"), n.Field<string>("Content"));
+            if (result.Last().Titel == "" && result.Last().Content == "") {
+                serv.DeleteNote(result.Last().Id);
+            }
         }
     }
 }

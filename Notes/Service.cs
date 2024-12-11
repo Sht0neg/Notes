@@ -28,6 +28,30 @@ namespace Notes
             }
         }
 
+        public DataTable SettingsInit() {
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"SELECT * FROM Settings";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                return dataTable;
+            }
+        }
+
+        public void UpdateSettings(int size, string color) {
+
+            using (MySqlConnection conn = new MySqlConnection(StrConn))
+            {
+                conn.Open();
+                string strCommand = $"UPDATE Settings SET FontSize = {size}, TextColor = '{color}' WHERE Id = {1}";
+                MySqlCommand cmd = new MySqlCommand(strCommand, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public void CreateNewNote(string Titel, string Text)
         {
             using (MySqlConnection conn = new MySqlConnection(StrConn))

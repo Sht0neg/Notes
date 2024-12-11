@@ -11,11 +11,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" x:Name="NoteList" FontSize="17"></ListBox>
+        <ListBox Grid.Column="0" x:Name="NoteList"></ListBox>
         <StackPanel VerticalAlignment="Center" Grid.Column="1" Width="200">
             <Button x:Name="InfButton" Content="Просмотреть" Height="50" Margin="0, 0, 0, 50" Click="InfButton_Click"></Button>
             <Button x:Name="AddButton" Content="Добавить" Height="50" Margin="0, 0, 0, 50" Click="AddButton_Click"></Button>
-            <Button x:Name="DelButton" Content="Удалить" Height="50" Click="DelButton_Click" ></Button>
+            <Button x:Name="DelButton" Content="Удалить" Margin="0, 0, 0, 50" Height="50" Click="DelButton_Click" ></Button>
+            <Button x:Name="SetButton" Content="Настройки" Height="50" Click="SetButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
